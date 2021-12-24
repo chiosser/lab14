@@ -1,0 +1,255 @@
+<html>
+<head>
+<title> Кодирование и декодирование значений cookie</title>
+<style type="text/css">
+	
+	body {
+  padding: 40px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+#name {
+	text-align: center;
+}
+.btn {
+  width: 45px;
+  height: 45px;
+  display: block;
+  cursor: pointer;
+  margin: 10px;
+  padding: 0;
+  border: 1px solid white;
+}
+#colors,#shifr {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#shifr {
+	flex-direction: column;
+}
+h2 {
+	text-align: center;
+	font-family: 'Calibri';
+	margin-top: 50px;
+	}
+
+	a {
+		text-decoration: none;
+		color: white;
+		text-shadow: 1px 1px 5px black;
+	}
+	input {
+		border-radius: 10px;
+		padding: 5px;
+	}
+</style>
+</head>
+<body>
+<h2>Задание 1. Имя</h2>
+<p id="name"></p>
+
+
+
+	<h2>Задание 2. Background</h2>
+<div id="colors">
+    <span class="btn" style="background-color: #ff9aa2;"></span>
+    <span class="btn" style="background-color: #ffb7b2;"></span>
+    <span class="btn" style="background-color: #ffdac1;"></span>
+    <span class="btn" style="background-color: #e2f0cb;"></span>
+    <span class="btn" style="background-color: #b5ead7;"></span>
+    <span class="btn" style="background-color: #c7ceea;"></span>
+</div>	
+
+<h2>Задание 3. Шифр</h2>
+<div id="shifr">
+	<div>
+		<label for="text">Text</label>
+		<input type="text" name="text" id="text"> 
+		<label for="key">Key</label>
+		<input type="text" name="key" id ="key">
+	</div>
+	<div>
+<br>
+<a href="javascript:set_cookie('coded_cookie', encode_cookie('mama'))">Закодировать cookie</a><br>
+<a href="javascript:alert(get_cookie('coded_cookie'))">Отобразить закодированные значения cookie</a><br>
+<a href="javascript:alert(decode_cookie(get_cookie('coded_cookie')))">Отобразить раскодированные значения cookie</a><br>
+</div>
+</div>
+
+
+
+</body>
+  <script>
+  function set_cookie ( name, value, expires_year, expires_month, expires_day, path, domain, secure )
+{
+  var cookie_string = name + "=" + escape ( value );
+
+  if ( expires_year)
+  {
+    var expires = new Date ( expires_year, expires_month, expires_day );
+    cookie_string += "; expires=" + expires.toGMTString();
+  }
+
+  if ( path )
+  cookie_string += "; path=" + escape ( path );
+
+  if ( domain )
+  cookie_string += "; domain=" + escape ( domain );
+
+  if ( secure )
+  cookie_string += "; secure";
+
+  document.cookie = cookie_string;
+
+}
+
+function delete_cookie ( cookie_name )
+{
+  var cookie_date = new Date ( );  //Ткущая дата и время
+  cookie_date.setTime ( cookie_date.getTime() - 1 );
+  document.cookie = cookie_name += "=; expires=" + cookie_date.toGMTString();
+}
+
+function get_cookie ( cookie_name )
+{
+  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+
+  if ( results )
+    return ( unescape ( results[2] ) );
+  else
+    return null;
+}
+
+if ( ! get_cookie ( "username" ) )
+{
+  var username = prompt ( "Как вас зовут?", "" );
+
+  if ( username )
+  {
+    var current_date = new Date;
+    var cookie_year = current_date.getFullYear ( ) + 1;
+    var cookie_month = current_date.getMonth ( );
+    var cookie_day = current_date.getDate ( );
+    set_cookie ( "username", username, cookie_year, cookie_month, cookie_day );
+    document.location.reload( );
+  }
+}
+else
+{
+  var username = get_cookie ( "username" );
+   document.getElementById('name').insertAdjacentHTML("beforeend","Привет, " + username + "!" );
+  document.getElementById('name').insertAdjacentHTML("beforeend", "<br><a href=\"javascript:delete_cookie('username'); document.location.reload( );\">Перезаписать имя</a>" );
+}
+</script>
+
+
+
+
+
+<script type="text/javascript">
+	
+	var setCookie = function (n, val) {
+    var exdays = 30;
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = n + "=" + val + "; " + expires;
+};
+
+var getCookie = function (n) {
+    var name = n + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+};
+
+document.onclick = function (e) {
+    if (e.target.className == 'btn') {
+        var favColor = e.target.style.backgroundColor;
+        setCookie('color', favColor);
+        document.body.style.backgroundColor = favColor;
+        console.log(favColor);
+    }
+};
+
+window.onload = function () {
+    var favColor = document.body.style.backgroundColor;
+    var color = getCookie('color');
+    if (color === '') {
+        document.body.style.backgroundColor = favColor;
+    } else {
+      document.body.style.backgroundColor = color;
+    }
+};
+</script>
+
+
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function get_cookie(name_to_get) {
+    var cookie_pair
+    var cookie_name
+    var cookie_value
+    var cookie_array = document.cookie.split("; ")
+    for (counter = 0; counter < cookie_array.length; counter++) {
+        cookie_pair = cookie_array[counter].split("=")
+        cookie_name = cookie_pair[0]
+        cookie_value = cookie_pair[1]
+        if (cookie_name == name_to_get) {return unescape(cookie_value)        }
+    }
+        return null
+}
+function set_cookie(cookie_name, cookie_value, cookie_expire, cookie_path, cookie_domain, cookie_secure) {
+    var cookie_string = cookie_name + "=" + cookie_value
+    if (cookie_expire) {        var expire_date = new Date()
+        var ms_from_now = cookie_expire * 24 * 60 * 60 * 1000
+        expire_date.setTime(expire_date.getTime() + ms_from_now)
+        var expire_string = expire_date.toGMTString()
+        cookie_string += "; expires=" + expire_string
+    }
+        if (cookie_path) { cookie_string += "; path=" + cookie_path }
+    if (cookie_domain) { cookie_string += "; domain=" + cookie_domain    }
+        if (cookie_secure) {  cookie_string += "; true"}
+        document.cookie = cookie_string
+}
+function encode_cookie(cookie_value) {
+	cookie_value = document.getElementById('text').value;
+	cookie_key = document.getElementById('key').value;
+    // Эта переменная содержит закодированные символы
+    var coded_string = ""
+    // Просмотр каждого символа значения
+    for (var counter = 0; counter < cookie_value.length; counter++) {
+        // Добавление кода символа в строку
+        coded_string += cookie_value.charCodeAt(counter)+cookie_key.charCodeAt(counter%cookie_key.length);
+        // Разделение каждого кода знаком плюс (+)
+        if (counter < cookie_value.length - 1) {coded_string += "+"}
+    }
+    return coded_string
+}
+function decode_cookie(coded_string) {
+    // Эта переменная содержит декодированное значение
+    var cookie_value = ""
+    cookie_key = document.getElementById('key').value;
+    // С помощью знака плюс (+) закодированное значение разделяется на массив 
+    var code_array = coded_string.split("+")
+    // Просмотр массива
+    for (var counter = 0; counter < code_array.length; counter++) {
+       // Преобразование кодов в символы  и добавление их в значение cookie
+        cookie_value += String.fromCharCode(code_array[counter]-cookie_key.charCodeAt(counter%cookie_key.length));
+    }
+    return cookie_value
+}
+//-->
+</script>
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+</html>
+
+
+
