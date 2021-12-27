@@ -7,9 +7,6 @@
   padding: 40px;
   background-color: rgba(0, 0, 0, 0.4);
 }
-#name {
-	text-align: center;
-}
 .btn {
   width: 45px;
   height: 45px;
@@ -18,11 +15,6 @@
   margin: 10px;
   padding: 0;
   border: 1px solid white;
-}
-#colors,#shifr {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 #shifr {
 	flex-direction: column;
@@ -45,12 +37,10 @@ h2 {
 </style>
 </head>
 <body>
-<h2>Задание 1. Имя</h2>
-<p id="name"></p>
 
 
 
-	<h2>Задание 2. Background</h2>
+	<h2>Background</h2>
 <div id="colors">
     <span class="btn" style="background-color: #ff9aa2;"></span>
     <span class="btn" style="background-color: #ffb7b2;"></span>
@@ -60,7 +50,7 @@ h2 {
     <span class="btn" style="background-color: #c7ceea;"></span>
 </div>	
 
-<h2>Задание 3. Шифр</h2>
+<h2>Шифр</h2>
 <div id="shifr">
 	<div>
 		<label for="text">Text</label>
@@ -250,6 +240,7 @@ function decode_cookie(coded_string) {
 </script>
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </html>
+
 
 
 
